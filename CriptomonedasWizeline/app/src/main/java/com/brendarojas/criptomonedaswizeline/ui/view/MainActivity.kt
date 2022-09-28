@@ -11,6 +11,7 @@ import com.brendarojas.criptomonedaswizeline.ui.viewModel.CryptoViewModel
 import dagger.hilt.EntryPoint
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.HiltAndroidApp
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
