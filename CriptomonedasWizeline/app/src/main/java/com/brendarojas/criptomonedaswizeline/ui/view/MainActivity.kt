@@ -34,10 +34,10 @@ class MainActivity : AppCompatActivity() {
             Log.d("mensajito", "Bids: ${it}")
         })
 
-        cryptoViewModel.onCreateTicker()
+        /*cryptoViewModel.onCreateTicker()
         cryptoViewModel.tickerModel.observe(this, Observer {
             Log.d("mensajito", "Ticker: ${it}")
-        })
+        })*/
 
     }
 }

@@ -11,7 +11,6 @@ import javax.inject.Inject
 class CryptoService @Inject constructor(
     private val apiClient: CryptoApiClient
 ){
-    //private val retrofit = RetrofitConfig.getConfigRetrofit()
 
     suspend fun getAvailableBooks(): BookModelResponse {
         return withContext(Dispatchers.IO){

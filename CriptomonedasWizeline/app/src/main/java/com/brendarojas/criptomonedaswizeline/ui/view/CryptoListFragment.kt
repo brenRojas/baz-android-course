@@ -43,7 +43,7 @@ class CryptoListFragment : Fragment() {
 
         cryptoViewModel.onCreateAvailableBook()
         cryptoViewModel.bookModel.observe(viewLifecycleOwner , Observer {
-            //Log.d("mensajito", "AvailableBookfragment: ${it}")
+            Log.d("mensajito", "AvailableBookfragment: ${it}")
             adapterBook.submitList(it)
         })
 

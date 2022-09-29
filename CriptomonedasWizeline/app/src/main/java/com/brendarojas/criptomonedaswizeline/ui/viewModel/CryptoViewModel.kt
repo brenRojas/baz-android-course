@@ -9,6 +9,9 @@ import com.brendarojas.criptomonedaswizeline.data.model.TickerModel
 import com.brendarojas.criptomonedaswizeline.domain.GetAvailableBookUseCase
 import com.brendarojas.criptomonedaswizeline.domain.GetBidsUseCase
 import com.brendarojas.criptomonedaswizeline.domain.GetTickerUseCase
+import com.brendarojas.criptomonedaswizeline.domain.model.BidsModelDomain
+import com.brendarojas.criptomonedaswizeline.domain.model.BooksModelDomain
+import com.brendarojas.criptomonedaswizeline.domain.model.TickerModelDomain
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -20,29 +23,35 @@ class CryptoViewModel @Inject constructor(
     private val getTickerUseCase : GetTickerUseCase
 ) : ViewModel() {
 
-    val bookModel = MutableLiveData<List<BookModel>>()
-    val bidsModel = MutableLiveData<List<BidsModel>>()
-    val tickerModel = MutableLiveData<TickerModel>()
+    val bookModel = MutableLiveData<List<BooksModelDomain>>()
+    val bidsModel = MutableLiveData<List<BidsModelDomain>>()
+    val tickerModel = MutableLiveData<TickerModelDomain>()
 
     //Llamadas al caso de uso
     fun onCreateAvailableBook(){
         viewModelScope.launch {
             val result = getAvailableBookUseCase()
-            bookModel.postValue(result)
+            if (!result.isNullOrEmpty()){
+                bookModel.postValue(result)
+            }
         }
     }
 
     fun onCreateBids(){
         viewModelScope.launch {
             val result = getBidsUseCase()
-            bidsModel.postValue(result)
+            if (!result.isNullOrEmpty()){
+                bidsModel.postValue(result)
+            }
         }
     }
 
     fun onCreateTicker(){
         viewModelScope.launch {
             val result = getTickerUseCase()
-            tickerModel.postValue(result)
+            if (result != null){
+                tickerModel.postValue(result)
+            }
         }
     }
 
