@@ -63,9 +63,11 @@ class CryptoRepository @Inject constructor(
         return response.toDomain()
     }
 
-    suspend fun getAllTickerFromDatabase(): TickerModelDomain {
-        val response : TickerEntity = cryptoDao.getAllTicker()
-        return response.toDomain()
+    suspend fun getAllTickerFromDatabase(): TickerModelDomain? {
+        val response : TickerEntity? = cryptoDao.getAllTicker()
+        return response?.let {
+             it.toDomain()
+         } ?: null
     }
 
     suspend fun insertTicker(ticker: TickerEntity){

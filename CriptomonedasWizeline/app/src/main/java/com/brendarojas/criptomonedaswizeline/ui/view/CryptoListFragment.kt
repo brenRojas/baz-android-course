@@ -15,6 +15,7 @@ import com.brendarojas.criptomonedaswizeline.R
 import com.brendarojas.criptomonedaswizeline.databinding.FragmentCryptoListBinding
 import com.brendarojas.criptomonedaswizeline.ui.adapter.AvailableBooksAdapter
 import com.brendarojas.criptomonedaswizeline.ui.viewModel.CryptoViewModel
+import com.brendarojas.criptomonedaswizeline.utils.RequestState
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -46,6 +47,13 @@ class CryptoListFragment : Fragment() {
             Log.d("mensajito", "AvailableBookfragment: ${it}")
             adapterBook.submitList(it)
         })
+        cryptoViewModel.tickerState.observe(viewLifecycleOwner) {
+            when(it){
+                is RequestState.Error -> TODO()
+                RequestState.Loading -> TODO()
+                is RequestState.Success -> TODO()
+            }
+        }
 
         binding.recyclerAvailableBooks.adapter = adapterBook
         binding.recyclerAvailableBooks.layoutManager = LinearLayoutManager(requireContext())

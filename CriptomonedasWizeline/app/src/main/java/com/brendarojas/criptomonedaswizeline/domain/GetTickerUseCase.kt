@@ -11,7 +11,7 @@ import javax.inject.Inject
 class GetTickerUseCase @Inject constructor(
     private val cryptoRepository : CryptoRepository
 ){
-    suspend operator fun invoke(): TickerModelDomain {
+    suspend operator fun invoke(): TickerModelDomain? {
         val ticker = cryptoRepository.getAllTickerFromApi()
         return if (ticker == null) {
             cryptoRepository.cleanTicker()

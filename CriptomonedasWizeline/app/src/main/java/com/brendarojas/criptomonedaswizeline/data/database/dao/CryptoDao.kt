@@ -33,7 +33,7 @@ interface CryptoDao {
 
     //Ticker
     @Query("SELECT * FROM table_ticker")
-    suspend fun getAllTicker(): TickerEntity
+    suspend fun getAllTicker(): TickerEntity?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAllTicker(ticker: TickerEntity)
