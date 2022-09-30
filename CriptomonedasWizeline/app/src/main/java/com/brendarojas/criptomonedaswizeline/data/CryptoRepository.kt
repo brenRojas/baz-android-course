@@ -1,6 +1,6 @@
 package com.brendarojas.criptomonedaswizeline.data
 
-import com.brendarojas.criptomonedaswizeline.data.database.dao.CryptoDao
+import com.brendarojas.criptomonedaswizeline.config.RoomModule
 import com.brendarojas.criptomonedaswizeline.data.database.entities.BidsEntity
 import com.brendarojas.criptomonedaswizeline.data.database.entities.BookEntity
 import com.brendarojas.criptomonedaswizeline.data.database.entities.TickerEntity
@@ -17,7 +17,6 @@ import javax.inject.Inject
 
 class CryptoRepository @Inject constructor(
     private val api : CryptoService,
-    private val cryptoDao: CryptoDao
 ){
     //AvailableBooks
     suspend fun getAllAvailableBooksFromApi(): List<BooksModelDomain> {
@@ -26,16 +25,16 @@ class CryptoRepository @Inject constructor(
     }
 
     suspend fun getAllAvailableBooksFromDatabase(): List<BooksModelDomain> {
-        val response : List<BookEntity> = cryptoDao.getAllAvailableBooks()
+        val response : List<BookEntity> = RoomModule.provideBookDao().getAllAvailableBooks()
         return response.map { it.toDomain()}
     }
 
     suspend fun insertAvailableBooks(books: List<BookEntity>){
-        cryptoDao.insertAllAvailableBooks(books)
+        RoomModule.provideBookDao().insert(books.toTypedArray())
     }
 
     suspend fun cleanAvailableBooks() {
-        cryptoDao.deleteAllAvailableBooks()
+        RoomModule.provideBookDao().deleteAllAvailableBooks()
     }
 
     //Bids
@@ -45,16 +44,16 @@ class CryptoRepository @Inject constructor(
     }
 
     suspend fun getAllBidsFromDatabase(): List<BidsModelDomain> {
-        val response : List<BidsEntity> = cryptoDao.getAllBids()
+        val response : List<BidsEntity> = RoomModule.provideBidsDao().getAllBids()
         return response.map { it.toDomain()}
     }
 
     suspend fun insertBids(bids: List<BidsEntity>){
-        cryptoDao.insertAllBids(bids)
+        RoomModule.provideBidsDao().insert(bids.toTypedArray())
     }
 
     suspend fun cleanBids() {
-        cryptoDao.deleteAllBids()
+        RoomModule.provideBidsDao().deleteAllBids()
     }
 
     //Ticker
@@ -64,18 +63,18 @@ class CryptoRepository @Inject constructor(
     }
 
     suspend fun getAllTickerFromDatabase(): TickerModelDomain? {
-        val response : TickerEntity? = cryptoDao.getAllTicker()
+        val response : TickerEntity? = RoomModule.provideTickerDao().getAllTicker()
         return response?.let {
              it.toDomain()
          } ?: null
     }
 
     suspend fun insertTicker(ticker: TickerEntity){
-        cryptoDao.insertAllTicker(ticker)
+        RoomModule.provideTickerDao().insert(ticker)
     }
 
     suspend fun cleanTicker() {
-        cryptoDao.deleteAllTicker()
+        RoomModule.provideTickerDao().deleteAllTicker()
     }
 
 

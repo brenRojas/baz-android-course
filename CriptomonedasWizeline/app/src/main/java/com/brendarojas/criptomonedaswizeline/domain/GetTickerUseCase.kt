@@ -6,16 +6,18 @@ import com.brendarojas.criptomonedaswizeline.data.model.BidsModel
 import com.brendarojas.criptomonedaswizeline.data.model.TickerModel
 import com.brendarojas.criptomonedaswizeline.domain.model.BidsModelDomain
 import com.brendarojas.criptomonedaswizeline.domain.model.TickerModelDomain
+import com.brendarojas.criptomonedaswizeline.utils.BaseUtils
 import javax.inject.Inject
 
 class GetTickerUseCase @Inject constructor(
     private val cryptoRepository : CryptoRepository
 ){
     suspend operator fun invoke(): TickerModelDomain? {
-        val ticker = cryptoRepository.getAllTickerFromApi()
-        return if (ticker == null) {
+        val ticker = if(BaseUtils.isNetworkEnabled()) cryptoRepository.getAllTickerFromApi() else cryptoRepository.getAllTickerFromDatabase()
+
+        return if (ticker != null) {
             cryptoRepository.cleanTicker()
-            cryptoRepository.insertTicker(ticker)
+            cryptoRepository.insertTicker(ticker.toDatabase())
             ticker
         } else {
             //si falla el servidor se accede a una versión guardada en la base de datos

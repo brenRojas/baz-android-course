@@ -16,6 +16,7 @@ import com.brendarojas.criptomonedaswizeline.domain.model.BooksModelDomain
 
 
 class AvailableBooksAdapter(
+    private val listener: OnCryptoSelectedItem
  ): ListAdapter<BooksModelDomain, AvailableBooksAdapter.ViewHolder>(difCallback)  {
 
     companion object{
@@ -37,14 +38,15 @@ class AvailableBooksAdapter(
         viewHolder.enlazarItem(getItem(position))
     }
 
-    class ViewHolder(val binding: CryptoItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(val binding: CryptoItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun enlazarItem( bookModel: BooksModelDomain ){
             binding.txtBookName.text = bookModel.bookName
             binding.txtMaximumPriceValue.text = bookModel.maximumPrice
             binding.txtMinimumPriceValue.text = bookModel.minimumPrice
 
             binding.cardBook.setOnClickListener {
-                          }
+                listener.onItemListener(bookModel)
+            }
         }
     }
 

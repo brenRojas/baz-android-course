@@ -6,13 +6,15 @@ import com.brendarojas.criptomonedaswizeline.data.model.BidsModel
 import com.brendarojas.criptomonedaswizeline.data.model.BookModel
 import com.brendarojas.criptomonedaswizeline.domain.model.BidsModelDomain
 import com.brendarojas.criptomonedaswizeline.domain.model.BooksModelDomain
+import com.brendarojas.criptomonedaswizeline.utils.BaseUtils
 import javax.inject.Inject
 
 class GetBidsUseCase @Inject constructor(
     private val cryptoRepository : CryptoRepository
 ) {
     suspend operator fun invoke(): List<BidsModelDomain> {
-        val bids = cryptoRepository.getAllBidsFromApi()
+        val bids = if(BaseUtils.isNetworkEnabled()) cryptoRepository.getAllBidsFromApi() else cryptoRepository.getAllBidsFromDatabase()
+
         return if (bids.isNotEmpty()) {
             cryptoRepository.cleanBids()
             cryptoRepository.insertBids( bids.map { it.toDatabase() })

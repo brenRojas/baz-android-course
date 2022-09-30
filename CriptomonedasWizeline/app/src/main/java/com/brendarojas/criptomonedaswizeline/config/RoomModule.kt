@@ -6,6 +6,7 @@ import com.brendarojas.criptomonedaswizeline.data.database.CryptoDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ActivityComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
@@ -14,14 +15,37 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object RoomModule {
 
-    private const val CRYPTO_DATABASE_NAME = "crypto_database_name"
+    private val CRYPTO_DATABASE_NAME = "cryptodatabase.db"
+    lateinit var aplicationInstance: InitialApplication
+    private var databaseInstance: CryptoDatabase? = null
 
     @Singleton
     @Provides
-    fun provideRoom(@ApplicationContext context: Context) = Room.databaseBuilder(context, CryptoDatabase::class.java, CRYPTO_DATABASE_NAME).build()
+    fun provideRoom(): CryptoDatabase {
+        aplicationInstance.let {
+            if(databaseInstance == null){
+                synchronized(CryptoDatabase::class.java) {
+                    databaseInstance = Room.databaseBuilder(it, CryptoDatabase::class.java, CRYPTO_DATABASE_NAME)
+                        .allowMainThreadQueries()
+                        .fallbackToDestructiveMigration()
+                        .build()
+                }
+            }
+        }
+
+        return databaseInstance!!
+    }
 
     @Singleton
     @Provides
-    fun provideQuoteDao(database: CryptoDatabase) = database.getCryptoDao()
+    fun provideBookDao() = provideRoom().getBookDao()
+
+    @Singleton
+    @Provides
+    fun provideBidsDao() = provideRoom().getBidsDao()
+
+    @Singleton
+    @Provides
+    fun provideTickerDao() = provideRoom().getTickerDao()
 
 }
