@@ -26,25 +26,29 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         cryptoViewModel.onCreateAvailableBook()
-        cryptoViewModel.bookModel.observe(this, Observer {
-            Log.d("mensajito", "AvailableBook: ${it}")
-        })
+        cryptoViewModel.bookState.observe(this) {
+            when(it) {
+                is RequestState.Error -> Log.d("mensajito", "AvailableBookError: ${it.message}")
+                is RequestState.Loading -> Log.d("mensajito", "AvailableBookLoading: ${it}")
+                is RequestState.Success -> Log.d("mensajito", "AvailableBookSuccess: ${it.data}")
+            }
+        }
 
         cryptoViewModel.onCreateBids()
-        cryptoViewModel.bidsModel.observe(this, Observer {
-            Log.d("mensajito", "Bids: ${it}")
-        })
+        cryptoViewModel.bidsState.observe(this) {
+            when(it) {
+                is RequestState.Error -> Log.d("mensajito", "BidsError: ${it.message}")
+                is RequestState.Loading -> Log.d("mensajito", "BidsLoading: ${it}")
+                is RequestState.Success -> Log.d("mensajito", "BidsSuccess: ${it.data}")
+            }
+        }
 
         cryptoViewModel.onCreateTicker()
-        cryptoViewModel.tickerModel.observe(this, Observer {
-            Log.d("mensajito", "Ticker: ${it}")
-        })
-
         cryptoViewModel.tickerState.observe(this) {
             when(it) {
-                is RequestState.Error -> Log.d("mensajito", "TickerError: ${it}")
-                RequestState.Loading -> Log.d("mensajito", "TickerLoading: ${it}")
-                is RequestState.Success -> Log.d("mensajito", "TickerSuccess: ${it}")
+                is RequestState.Error -> Log.d("mensajito", "TickerError: ${it.message}")
+                is RequestState.Loading -> Log.d("mensajito", "TickerLoading: ${it}")
+                is RequestState.Success -> Log.d("mensajito", "TickerSuccess: ${it.data}")
             }
         }
 

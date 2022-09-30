@@ -43,20 +43,21 @@ class CryptoListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         cryptoViewModel.onCreateAvailableBook()
-        cryptoViewModel.bookModel.observe(viewLifecycleOwner , Observer {
-            Log.d("mensajito", "AvailableBookfragment: ${it}")
-            adapterBook.submitList(it)
-        })
-        cryptoViewModel.tickerState.observe(viewLifecycleOwner) {
-            when(it){
-                is RequestState.Error -> TODO()
-                RequestState.Loading -> TODO()
-                is RequestState.Success -> TODO()
+        cryptoViewModel.bookState.observe(viewLifecycleOwner) {
+            when(it) {
+                is RequestState.Error -> Log.d("mensajito", "AvailableBookError: ${it.message}")
+                is RequestState.Loading -> Log.d("mensajito", "AvailableBookLoading: ${it}")
+                is RequestState.Success -> {
+
+                    adapterBook.submitList(it.data)
+                    binding.apply {
+                        recyclerAvailableBooks.adapter = adapterBook
+                        recyclerAvailableBooks.layoutManager = LinearLayoutManager(requireContext())
+                    }
+
+                }
             }
         }
-
-        binding.recyclerAvailableBooks.adapter = adapterBook
-        binding.recyclerAvailableBooks.layoutManager = LinearLayoutManager(requireContext())
     }
 
     override fun onDestroyView() {

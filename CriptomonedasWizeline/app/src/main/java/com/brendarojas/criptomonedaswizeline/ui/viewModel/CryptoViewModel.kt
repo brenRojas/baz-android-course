@@ -25,10 +25,9 @@ class CryptoViewModel @Inject constructor(
     private val getTickerUseCase : GetTickerUseCase
 ) : ViewModel() {
 
-    val bookModel = MutableLiveData<List<BooksModelDomain>>()
-    val bidsModel = MutableLiveData<List<BidsModelDomain>>()
-    val tickerModel = MutableLiveData<TickerModelDomain>()
-
+    //val bookModel = MutableLiveData<List<BooksModelDomain>>()
+   // val bidsModel = MutableLiveData<List<BidsModelDomain>>()
+   // val tickerModel = MutableLiveData<TickerModelDomain>()
 
     private val _bookState = MutableLiveData<RequestState<List<BooksModelDomain>>>()
     val bookState: LiveData<RequestState<List<BooksModelDomain>>> = _bookState
@@ -39,33 +38,36 @@ class CryptoViewModel @Inject constructor(
     private val _tickerState = MutableLiveData<RequestState<TickerModelDomain>>()
     val tickerState: LiveData<RequestState<TickerModelDomain>> = _tickerState
 
-
     //Llamadas al caso de uso
     fun onCreateAvailableBook(){
+        _bookState.postValue(RequestState.Loading())
         viewModelScope.launch {
             val result = getAvailableBookUseCase()
-            if (!result.isNullOrEmpty()){
-                bookModel.postValue(result)
+            if (result != null){
+                _bookState.postValue(RequestState.Success(result))
+            } else {
+                _bookState.postValue(RequestState.Error("No se encontraron resultados"))
             }
         }
     }
 
     fun onCreateBids(){
-        _bidsState.postValue(RequestState.Loading)
+        _bidsState.postValue(RequestState.Loading())
         viewModelScope.launch {
             val result = getBidsUseCase()
-            if (!result.isNullOrEmpty()){
+            if (result != null){
                 _bidsState.postValue(RequestState.Success(result))
+            } else {
+                _bidsState.postValue(RequestState.Error("No se encontraron resultados"))
             }
         }
     }
 
     fun onCreateTicker(){
-        _tickerState.postValue(RequestState.Loading)
+        _tickerState.postValue(RequestState.Loading())
         viewModelScope.launch {
             val result = getTickerUseCase()
             if (result != null){
-               // tickerModel.postValue(result!!)
                 _tickerState.postValue(RequestState.Success(result))
             } else {
                 _tickerState.postValue(RequestState.Error("No se encontraron resultados"))
