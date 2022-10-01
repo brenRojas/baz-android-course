@@ -12,8 +12,8 @@ import javax.inject.Inject
 class GetBidsUseCase @Inject constructor(
     private val cryptoRepository : CryptoRepository
 ) {
-    suspend operator fun invoke(): List<BidsModelDomain> {
-        val bids = if(BaseUtils.isNetworkEnabled()) cryptoRepository.getAllBidsFromApi() else cryptoRepository.getAllBidsFromDatabase()
+    suspend operator fun invoke(book: String): List<BidsModelDomain> {
+        val bids = if(BaseUtils.isNetworkEnabled()) cryptoRepository.getAllBidsFromApi(book) else cryptoRepository.getAllBidsFromDatabase()
 
         return if (bids.isNotEmpty()) {
             cryptoRepository.cleanBids()

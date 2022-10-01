@@ -46,6 +46,10 @@ object RoomModule {
 
     @Singleton
     @Provides
+    fun provideAsksDao() = provideRoom().getAsksDao()
+
+    @Singleton
+    @Provides
     fun provideTickerDao() = provideRoom().getTickerDao()
 
 }

@@ -26,33 +26,5 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         BaseUtils.context = applicationContext
         setContentView(binding.root)
-
-        cryptoViewModel.onCreateAvailableBook()
-        cryptoViewModel.bookState.observe(this) {
-            when(it) {
-                is RequestState.Error -> Log.d("mensajito", "AvailableBookError: ${it.message}")
-                is RequestState.Loading -> Log.d("mensajito", "AvailableBookLoading: ${it.toString()}")
-                is RequestState.Success -> Log.d("mensajito", "AvailableBookSuccess: ${it.data}")
-            }
-        }
-
-        cryptoViewModel.onCreateBids()
-        cryptoViewModel.bidsState.observe(this) {
-            when(it) {
-                is RequestState.Error -> Log.d("mensajito", "BidsError: ${it.message}")
-                is RequestState.Loading -> Log.d("mensajito", "BidsLoading: ${it.toString()}")
-                is RequestState.Success -> Log.d("mensajito", "BidsSuccess: ${it.data}")
-            }
-        }
-
-        cryptoViewModel.onCreateTicker()
-        cryptoViewModel.tickerState.observe(this) {
-            when(it) {
-                is RequestState.Error -> Log.d("mensajito", "TickerError: ${it.message}")
-                is RequestState.Loading -> Log.d("mensajito", "TickerLoading: ${it.toString()}")
-                is RequestState.Success -> Log.d("mensajito", "TickerSuccess: ${it.data}")
-            }
-        }
-
     }
 }

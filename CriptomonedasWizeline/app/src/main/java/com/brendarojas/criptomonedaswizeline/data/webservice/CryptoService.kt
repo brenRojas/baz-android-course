@@ -19,16 +19,16 @@ class CryptoService @Inject constructor(
         }
     }
 
-    suspend fun getTicker(): TickerModelResponse{
+    suspend fun getTicker(book: String): TickerModelResponse{
         return withContext(Dispatchers.IO){
-            val response = (apiClient).getTicker("btc_mxn")
+            val response = (apiClient).getTicker(book)
             response.body()!!
         }
     }
 
-    suspend fun getOrderBooks(): BidsModelResponse{
+    suspend fun getOrderBooks(book: String): BidsModelResponse{
         return withContext(Dispatchers.IO){
-            val response = (apiClient).getOrderBook("btc_mxn")
+            val response = (apiClient).getOrderBook(book)
             response.body()!!
         }
     }

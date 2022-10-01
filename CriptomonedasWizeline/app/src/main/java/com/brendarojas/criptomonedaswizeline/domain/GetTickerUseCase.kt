@@ -12,8 +12,8 @@ import javax.inject.Inject
 class GetTickerUseCase @Inject constructor(
     private val cryptoRepository : CryptoRepository
 ){
-    suspend operator fun invoke(): TickerModelDomain? {
-        val ticker = if(BaseUtils.isNetworkEnabled()) cryptoRepository.getAllTickerFromApi() else cryptoRepository.getAllTickerFromDatabase()
+    suspend operator fun invoke(book: String): TickerModelDomain? {
+        val ticker = if(BaseUtils.isNetworkEnabled()) cryptoRepository.getAllTickerFromApi(book) else cryptoRepository.getAllTickerFromDatabase()
 
         return if (ticker != null) {
             cryptoRepository.cleanTicker()

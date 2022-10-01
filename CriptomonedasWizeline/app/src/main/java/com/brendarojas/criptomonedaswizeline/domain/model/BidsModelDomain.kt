@@ -3,7 +3,7 @@ package com.brendarojas.criptomonedaswizeline.domain.model
 import com.brendarojas.criptomonedaswizeline.data.database.entities.BidsEntity
 import com.brendarojas.criptomonedaswizeline.data.model.BidsModel
 
-data class BidsModelDomain(
+data class BidsModelDomain (
     var bookBids: String,
     val priceBids: String,
     val amountBids: String

@@ -41,7 +41,8 @@ class CryptoListFragment : Fragment(), OnCryptoSelectedItem {
     ): View? {
         _binding = FragmentCryptoListBinding.inflate(inflater, container, false)
         val view = binding.root
-        return view    }
+        return view
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

@@ -13,6 +13,7 @@ import com.brendarojas.criptomonedaswizeline.R
 import com.brendarojas.criptomonedaswizeline.data.model.BookModel
 import com.brendarojas.criptomonedaswizeline.databinding.CryptoItemBinding
 import com.brendarojas.criptomonedaswizeline.domain.model.BooksModelDomain
+import com.brendarojas.criptomonedaswizeline.utils.Utils.toBookName
 
 
 class AvailableBooksAdapter(
@@ -40,7 +41,7 @@ class AvailableBooksAdapter(
 
     inner class ViewHolder(val binding: CryptoItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun enlazarItem( bookModel: BooksModelDomain ){
-            binding.txtBookName.text = bookModel.bookName
+            binding.txtBookName.text = bookModel.bookName.toBookName()
             binding.txtMaximumPriceValue.text = bookModel.maximumPrice
             binding.txtMinimumPriceValue.text = bookModel.minimumPrice
 
