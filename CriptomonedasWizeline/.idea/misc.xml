@@ -5,8 +5,10 @@
       <map>
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1921875" />
         <entry key="app/src/main/res/layout/available_book_item.xml" value="0.2949331974637682" />
+        <entry key="app/src/main/res/layout/crypto_asks_item.xml" value="0.19610507246376813" />
+        <entry key="app/src/main/res/layout/crypto_bids_item.xml" value="0.19610507246376813" />
         <entry key="app/src/main/res/layout/crypto_item.xml" value="0.19610507246376813" />
-        <entry key="app/src/main/res/layout/fragment_crypto_detail.xml" value="0.14427083333333332" />
+        <entry key="app/src/main/res/layout/fragment_crypto_detail.xml" value="0.34175923665364594" />
         <entry key="app/src/main/res/layout/fragment_crypto_list.xml" value="0.1921875" />
       </map>
     </option>

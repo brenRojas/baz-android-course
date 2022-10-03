@@ -11,7 +11,6 @@ import javax.inject.Inject
 class CryptoService @Inject constructor(
     private val apiClient: CryptoApiClient
 ){
-    //private val retrofit = RetrofitConfig.getConfigRetrofit()
 
     suspend fun getAvailableBooks(): BookModelResponse {
         return withContext(Dispatchers.IO){
@@ -20,16 +19,16 @@ class CryptoService @Inject constructor(
         }
     }
 
-    suspend fun getTicker(): TickerModelResponse{
+    suspend fun getTicker(book: String): TickerModelResponse{
         return withContext(Dispatchers.IO){
-            val response = (apiClient).getTicker("btc_mxn")
+            val response = (apiClient).getTicker(book)
             response.body()!!
         }
     }
 
-    suspend fun getOrderBooks(): BidsModelResponse{
+    suspend fun getOrderBooks(book: String): BidsModelResponse{
         return withContext(Dispatchers.IO){
-            val response = (apiClient).getOrderBook("btc_mxn")
+            val response = (apiClient).getOrderBook(book)
             response.body()!!
         }
     }
