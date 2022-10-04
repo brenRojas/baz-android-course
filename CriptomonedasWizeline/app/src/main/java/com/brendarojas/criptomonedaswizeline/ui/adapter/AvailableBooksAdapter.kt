@@ -48,6 +48,23 @@ class AvailableBooksAdapter(
             binding.cardBook.setOnClickListener {
                 listener.onItemListener(bookModel)
             }
+
+            when(bookModel.bookName){
+                "btc_mxn" -> binding.imageBitcoin.setImageResource(R.drawable.bitcoin)
+                "eth_mxn" -> binding.imageBitcoin.setImageResource(R.drawable.ethereum)
+                "xrp_mxn" -> binding.imageBitcoin.setImageResource(R.drawable.xrp)
+                "ltc_mxn" -> binding.imageBitcoin.setImageResource(R.drawable.litecoin)
+                "bch_mxn" -> binding.imageBitcoin.setImageResource(R.drawable.bitcoin_cash)
+                "tusd_mxn" -> binding.imageBitcoin.setImageResource(R.drawable.tether)
+                "mana_mxn" -> binding.imageBitcoin.setImageResource(R.drawable.monero)
+                "bat_mxn" -> binding.imageBitcoin.setImageResource(R.drawable.avalanche_1)
+                "dai_mxn" -> binding.imageBitcoin.setImageResource(R.drawable.dai)
+                "usd_mxn" -> binding.imageBitcoin.setImageResource(R.drawable.uniswap)
+                else -> {
+                    binding.imageBitcoin.setImageResource(R.drawable.pancakeswap)
+                }
+            }
+
         }
     }
 

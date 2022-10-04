@@ -47,6 +47,13 @@ class CryptoDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.apply {
+            recyclerBids.adapter = adapterBids
+            recyclerAsks.adapter = adapterAsks
+            recyclerBids.layoutManager = LinearLayoutManager(requireContext())
+            recyclerAsks.layoutManager = LinearLayoutManager(requireContext())
+        }
+
         cryptoViewModel.onCreateBids(bookName)
         cryptoViewModel.bidsState.observe(viewLifecycleOwner) {
             when(it) {
@@ -54,10 +61,6 @@ class CryptoDetailFragment : Fragment() {
                 is RequestState.Loading -> Log.d("mensajito", "BidsLoading: ${it.toString()}")
                 is RequestState.Success -> {
                     adapterBids.submitList(it.data)
-                    binding.apply {
-                        recyclerBids.adapter = adapterBids
-                        recyclerBids.layoutManager = LinearLayoutManager(requireContext())
-                    }
                 }
             }
         }
@@ -69,10 +72,6 @@ class CryptoDetailFragment : Fragment() {
                 is RequestState.Loading -> Log.d("mensajito", "BidsLoading: ${it.toString()}")
                 is RequestState.Success -> {
                     adapterAsks.submitList(it.data)
-                    binding.apply {
-                        recyclerAsks.adapter = adapterAsks
-                        recyclerAsks.layoutManager = LinearLayoutManager(requireContext())
-                    }
                 }
             }
         }
@@ -87,9 +86,27 @@ class CryptoDetailFragment : Fragment() {
                     binding.txtLastPrice.text = activity?.resources?.getString(R.string.last_price, it.data?.last)
                     binding.txtHighPrice.text = activity?.resources?.getString(R.string.highPrice, it.data?.high)
                     binding.txtlowPrice.text = activity?.resources?.getString(R.string.lowPrice, it.data?.low)
+
+                    when(bookName){
+                        "btc_mxn" -> binding.imageBitcoinDetail.setImageResource(R.drawable.bitcoin)
+                        "eth_mxn" -> binding.imageBitcoinDetail.setImageResource(R.drawable.ethereum)
+                        "xrp_mxn" -> binding.imageBitcoinDetail.setImageResource(R.drawable.xrp)
+                        "ltc_mxn" -> binding.imageBitcoinDetail.setImageResource(R.drawable.litecoin)
+                        "bch_mxn" -> binding.imageBitcoinDetail.setImageResource(R.drawable.bitcoin_cash)
+                        "tusd_mxn" -> binding.imageBitcoinDetail.setImageResource(R.drawable.tether)
+                        "mana_mxn" -> binding.imageBitcoinDetail.setImageResource(R.drawable.monero)
+                        "bat_mxn" -> binding.imageBitcoinDetail.setImageResource(R.drawable.avalanche_1)
+                        "dai_mxn" -> binding.imageBitcoinDetail.setImageResource(R.drawable.dai)
+                        "usd_mxn" -> binding.imageBitcoinDetail.setImageResource(R.drawable.uniswap)
+                        else -> {
+                            binding.imageBitcoinDetail.setImageResource(R.drawable.pancakeswap)
+                        }
+                    }
                 }
             }
         }
+
+
 
     }
 }
