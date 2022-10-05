@@ -8,15 +8,17 @@ import com.brendarojas.criptomonedaswizeline.utils.BaseUtils
 import javax.inject.Inject
 
 class GetAvailableBookUseCase @Inject constructor(
-    private val cryptoRepository : CryptoRepository
-){
+    private val cryptoRepository: CryptoRepository
+) {
     suspend operator fun invoke(): List<BooksModelDomain> {
-        val books = if(BaseUtils.isNetworkEnabled()) cryptoRepository.getAllAvailableBooksFromApi()
-            else cryptoRepository.getAllAvailableBooksFromDatabase()
+        val books = if (BaseUtils.isNetworkEnabled())
+            cryptoRepository.getAllAvailableBooksFromApi()
+        else
+            cryptoRepository.getAllAvailableBooksFromDatabase()
 
         return if (books.isNotEmpty()) {
             cryptoRepository.cleanAvailableBooks()
-            cryptoRepository.insertAvailableBooks( books.map { it.toDatabase() })
+            cryptoRepository.insertAvailableBooks(books.map { it.toDatabase() })
             books
         } else {
             //si falla el servidor se accede a una versión guardada en la base de datos

@@ -1,5 +1,6 @@
 package com.brendarojas.criptomonedaswizeline.data
 
+import android.annotation.SuppressLint
 import com.brendarojas.criptomonedaswizeline.config.RoomModule
 import com.brendarojas.criptomonedaswizeline.data.database.entities.AsksEntity
 import com.brendarojas.criptomonedaswizeline.data.database.entities.BidsEntity
@@ -10,17 +11,31 @@ import com.brendarojas.criptomonedaswizeline.data.model.BidsModel
 import com.brendarojas.criptomonedaswizeline.data.model.BookModel
 import com.brendarojas.criptomonedaswizeline.data.model.TickerModel
 import com.brendarojas.criptomonedaswizeline.data.model.response.BidsModelResponse
+import com.brendarojas.criptomonedaswizeline.data.model.response.BookModelResponse
 import com.brendarojas.criptomonedaswizeline.data.webservice.CryptoService
 import com.brendarojas.criptomonedaswizeline.domain.model.*
+import io.reactivex.Observer
+import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
 import javax.inject.Inject
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 
 class CryptoRepository @Inject constructor(
     private val api : CryptoService,
 ){
     //AvailableBooks
-    suspend fun getAllAvailableBooksFromApi(): List<BooksModelDomain> {
-        val response : List<BookModel> = api.getAvailableBooks().bookData.filter { it.bookName.contains("mxn") }
-        return response.map { it.toDomain()}
+    @SuppressLint("CheckResult")
+    suspend fun getAllAvailableBooksFromApi() : List<BooksModelDomain> = suspendCoroutine { coroutine ->
+        api.getAvailableBooks()
+            .map {
+                it.bookData.filter { bookData -> bookData.bookName.contains("mxn") }
+                    .map { it.toDomain() }
+            }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+                coroutine.resume(it)
+            }
     }
 
     suspend fun getAllAvailableBooksFromDatabase(): List<BooksModelDomain> {
