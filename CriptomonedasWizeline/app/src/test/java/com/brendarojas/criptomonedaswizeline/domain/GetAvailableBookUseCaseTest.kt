@@ -23,22 +23,9 @@ class GetAvailableBookUseCaseTest {
         getAvailableBookUseCase = GetAvailableBookUseCase(cryptoRepository)
     }
 
-    @Test
-    fun `when the api doesnt return anything then get values from database`() = runBlocking {
-        // given
-        // coEvery { cryptoRepository.getAllAvailableBooksFromApi() } returns emptyList()
-
-        // when
-
-        GetAvailableBookUseCase(cryptoRepository)
-        // getAvailableBookUseCase()
-
-        // then
-        coVerify() { cryptoRepository.getAllAvailableBooksFromApi() }
-    }
 
     @Test
-    fun `when the api doesnt return something then get values from api`() = runBlocking {
+    fun `Si hay conexion a internet y getAllAvailableBooksFromApi regresa una lista con datos`() = runBlocking {
         // given
         val myList = listOf(BooksModelDomain("btc_mxn", "40000", "20000000", "0.00000030000", "3000", "10.00", "200000000"))
         every { BaseUtils.isNetworkEnabled() } returns true
@@ -50,7 +37,36 @@ class GetAvailableBookUseCaseTest {
         // then
         coVerify(exactly = 1) { cryptoRepository.cleanAvailableBooks() }
         coVerify(exactly = 1) { cryptoRepository.insertAvailableBooks(any()) }
-        // coVerify(exactly = 2) { cryptoRepository.getAllAvailableBooksFromDatabase() }
+        assert(myList == response)
+    }
+
+    @Test
+    fun `Si hay conexion a internet y getAllAvailableBooksFromApi regresa una emptylist`() = runBlocking {
+        // given
+        var myList = emptyList<BooksModelDomain>()
+        every { BaseUtils.isNetworkEnabled() } returns true
+        coEvery { cryptoRepository.getAllAvailableBooksFromApi() } returns myList
+
+        // when
+        val response = getAvailableBookUseCase()
+
+        // then
+        coVerify(exactly = 1) { cryptoRepository.getAllAvailableBooksFromDatabase() }
+        assert(myList == response)
+    }
+
+    @Test
+    fun `No hay conexion a internet y getAllAvailableBooksFromApi regresa una lista`() = runBlocking {
+        // given
+        val myList = listOf(BooksModelDomain("btc_mxn", "40000", "20000000", "0.00000030000", "3000", "10.00", "200000000"))
+        every { BaseUtils.isNetworkEnabled() } returns false
+        coEvery { cryptoRepository.getAllAvailableBooksFromDatabase() } returns myList
+
+        // when
+        val response = getAvailableBookUseCase()
+
+        // then
+        coVerify(exactly = 1) { cryptoRepository.getAllAvailableBooksFromDatabase() }
         assert(myList == response)
     }
 }
