@@ -42,7 +42,7 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideQuoteApiClient( retrofit: Retrofit ) : CryptoApiClient{
+    fun provideApiClient( retrofit: Retrofit ) : CryptoApiClient{
         return retrofit.create(CryptoApiClient::class.java)
     }
 

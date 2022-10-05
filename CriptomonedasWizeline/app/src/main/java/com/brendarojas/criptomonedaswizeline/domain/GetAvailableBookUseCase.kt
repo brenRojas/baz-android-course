@@ -11,7 +11,8 @@ class GetAvailableBookUseCase @Inject constructor(
     private val cryptoRepository : CryptoRepository
 ){
     suspend operator fun invoke(): List<BooksModelDomain> {
-        val books = if(BaseUtils.isNetworkEnabled()) cryptoRepository.getAllAvailableBooksFromApi() else cryptoRepository.getAllAvailableBooksFromDatabase()
+        val books = if(BaseUtils.isNetworkEnabled()) cryptoRepository.getAllAvailableBooksFromApi()
+            else cryptoRepository.getAllAvailableBooksFromDatabase()
 
         return if (books.isNotEmpty()) {
             cryptoRepository.cleanAvailableBooks()
