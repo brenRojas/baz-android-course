@@ -5,18 +5,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.brendarojas.criptomonedaswizeline.R
 import com.brendarojas.criptomonedaswizeline.databinding.CryptoBidsItemBinding
-import com.brendarojas.criptomonedaswizeline.databinding.CryptoItemBinding
 import com.brendarojas.criptomonedaswizeline.domain.model.AsksModelDomain
-import com.brendarojas.criptomonedaswizeline.domain.model.BooksModelDomain
-import com.brendarojas.criptomonedaswizeline.utils.Utils.toBookName
 
+class AsksAdapter() : ListAdapter<AsksModelDomain, AsksAdapter.ViewHolder>(difCallback) {
 
-class AsksAdapter(
-): ListAdapter<AsksModelDomain, AsksAdapter.ViewHolder>(difCallback)  {
-
-    companion object{
+    companion object {
         var difCallback = object : DiffUtil.ItemCallback<AsksModelDomain>() {
             override fun areItemsTheSame(oldItem: AsksModelDomain, newItem: AsksModelDomain): Boolean =
                 oldItem.bookAsks == newItem.bookAsks
@@ -36,11 +30,10 @@ class AsksAdapter(
     }
 
     class ViewHolder(val binding: CryptoBidsItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun enlazarItem( asksModel: AsksModelDomain){
+        fun enlazarItem(asksModel: AsksModelDomain) {
             binding.txtBookBids.text = asksModel.bookAsks
             binding.txtPriceBids.text = asksModel.priceAsks
             binding.txtAmountBids.text = asksModel.amountAsks
         }
     }
-
 }

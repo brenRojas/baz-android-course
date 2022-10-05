@@ -8,7 +8,8 @@ import com.brendarojas.criptomonedaswizeline.domain.model.TickerModelDomain
 @Entity(tableName = "table_ticker")
 data class TickerEntity(
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "idTicker") val idTicker: Int = 0,
+    @ColumnInfo(name = "idTicker")
+    val idTicker: Int = 0,
     @ColumnInfo(name = "bid") var nameBid: String,
     @ColumnInfo(name = "high") val high: String,
     @ColumnInfo(name = "last") val last: String,
@@ -16,7 +17,7 @@ data class TickerEntity(
     @ColumnInfo(name = "vwap") val vwap: String,
     @ColumnInfo(name = "low") val low: String,
     @ColumnInfo(name = "ask") val ask: String,
-    @ColumnInfo(name = "created_at") val createdAt: String,
+    @ColumnInfo(name = "created_at") val createdAt: String
 )
 
 fun TickerModelDomain.toDatabase() =
@@ -28,5 +29,5 @@ fun TickerModelDomain.toDatabase() =
         vwap = vwap,
         low = low,
         ask = ask,
-        createdAt = createdAt,
+        createdAt = createdAt
     )

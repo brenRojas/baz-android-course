@@ -8,25 +8,20 @@ import com.brendarojas.criptomonedaswizeline.data.database.entities.BookEntity
 import com.brendarojas.criptomonedaswizeline.data.database.entities.TickerEntity
 import com.brendarojas.criptomonedaswizeline.data.model.AsksModel
 import com.brendarojas.criptomonedaswizeline.data.model.BidsModel
-import com.brendarojas.criptomonedaswizeline.data.model.BookModel
 import com.brendarojas.criptomonedaswizeline.data.model.TickerModel
-import com.brendarojas.criptomonedaswizeline.data.model.response.BidsModelResponse
-import com.brendarojas.criptomonedaswizeline.data.model.response.BookModelResponse
 import com.brendarojas.criptomonedaswizeline.data.webservice.CryptoService
 import com.brendarojas.criptomonedaswizeline.domain.model.*
-import io.reactivex.Observer
-import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import javax.inject.Inject
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
 class CryptoRepository @Inject constructor(
-    private val api : CryptoService,
-){
-    //AvailableBooks
+    private val api: CryptoService
+) {
+    // AvailableBooks
     @SuppressLint("CheckResult")
-    suspend fun getAllAvailableBooksFromApi() : List<BooksModelDomain> = suspendCoroutine { coroutine ->
+    suspend fun getAllAvailableBooksFromApi(): List<BooksModelDomain> = suspendCoroutine { coroutine ->
         api.getAvailableBooks()
             .map {
                 it.bookData.filter { bookData -> bookData.bookName.contains("mxn") }
@@ -39,11 +34,11 @@ class CryptoRepository @Inject constructor(
     }
 
     suspend fun getAllAvailableBooksFromDatabase(): List<BooksModelDomain> {
-        val response : List<BookEntity> = RoomModule.provideBookDao().getAllAvailableBooks()
-        return response.map { it.toDomain()}
+        val response: List<BookEntity> = RoomModule.provideBookDao().getAllAvailableBooks()
+        return response.map { it.toDomain() }
     }
 
-    suspend fun insertAvailableBooks(books: List<BookEntity>){
+    suspend fun insertAvailableBooks(books: List<BookEntity>) {
         RoomModule.provideBookDao().insert(books.toTypedArray())
     }
 
@@ -51,18 +46,18 @@ class CryptoRepository @Inject constructor(
         RoomModule.provideBookDao().deleteAllAvailableBooks()
     }
 
-    //Bids
+    // Bids
     suspend fun getAllBidsFromApi(book: String): List<BidsModelDomain> {
-        val response : List<BidsModel> = api.getOrderBooks(book).bidsResponse.dataBids
+        val response: List<BidsModel> = api.getOrderBooks(book).bidsResponse.dataBids
         return response.map { it.toDomain() }
     }
 
     suspend fun getAllBidsFromDatabase(): List<BidsModelDomain> {
-        val response : List<BidsEntity> = RoomModule.provideBidsDao().getAllBids()
-        return response.map { it.toDomain()}
+        val response: List<BidsEntity> = RoomModule.provideBidsDao().getAllBids()
+        return response.map { it.toDomain() }
     }
 
-    suspend fun insertBids(bids: List<BidsEntity>){
+    suspend fun insertBids(bids: List<BidsEntity>) {
         RoomModule.provideBidsDao().insert(bids.toTypedArray())
     }
 
@@ -70,18 +65,18 @@ class CryptoRepository @Inject constructor(
         RoomModule.provideBidsDao().deleteAllBids()
     }
 
-    //Asks
+    // Asks
     suspend fun getAllAsksFromApi(book: String): List<AsksModelDomain> {
-        val response : List<AsksModel> = api.getOrderBooks(book).bidsResponse.dataAsks
+        val response: List<AsksModel> = api.getOrderBooks(book).bidsResponse.dataAsks
         return response.map { it.toDomain() }
     }
 
     suspend fun getAllAsksFromDatabase(): List<AsksModelDomain> {
-        val response : List<AsksEntity> = RoomModule.provideAsksDao().getAllAsks()
-        return response.map { it.toDomain()}
+        val response: List<AsksEntity> = RoomModule.provideAsksDao().getAllAsks()
+        return response.map { it.toDomain() }
     }
 
-    suspend fun insertAsks(asks: List<AsksEntity>){
+    suspend fun insertAsks(asks: List<AsksEntity>) {
         RoomModule.provideAsksDao().insert(asks.toTypedArray())
     }
 
@@ -89,26 +84,24 @@ class CryptoRepository @Inject constructor(
         RoomModule.provideAsksDao().deleteAllAsks()
     }
 
-    //Ticker
+    // Ticker
     suspend fun getAllTickerFromApi(book: String): TickerModelDomain {
-        val response : TickerModel = api.getTicker(book).dataTicker
+        val response: TickerModel = api.getTicker(book).dataTicker
         return response.toDomain()
     }
 
     suspend fun getAllTickerFromDatabase(): TickerModelDomain? {
-        val response : TickerEntity? = RoomModule.provideTickerDao().getAllTicker()
+        val response: TickerEntity? = RoomModule.provideTickerDao().getAllTicker()
         return response?.let {
-             it.toDomain()
-         } ?: null
+            it.toDomain()
+        } ?: null
     }
 
-    suspend fun insertTicker(ticker: TickerEntity){
+    suspend fun insertTicker(ticker: TickerEntity) {
         RoomModule.provideTickerDao().insert(ticker)
     }
 
     suspend fun cleanTicker() {
         RoomModule.provideTickerDao().deleteAllTicker()
     }
-
-
 }

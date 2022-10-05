@@ -4,9 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.brendarojas.criptomonedaswizeline.data.model.BidsModel
-import com.brendarojas.criptomonedaswizeline.data.model.BookModel
-import com.brendarojas.criptomonedaswizeline.data.model.TickerModel
 import com.brendarojas.criptomonedaswizeline.domain.GetAsksUseCase
 import com.brendarojas.criptomonedaswizeline.domain.GetAvailableBookUseCase
 import com.brendarojas.criptomonedaswizeline.domain.GetBidsUseCase
@@ -40,12 +37,12 @@ class CryptoViewModel @Inject constructor(
     private val _tickerState = MutableLiveData<RequestState<TickerModelDomain>>()
     val tickerState: LiveData<RequestState<TickerModelDomain>> = _tickerState
 
-    //Llamadas al caso de uso
+    // Llamadas al caso de uso
     fun onCreateAvailableBook() {
         _bookState.postValue(RequestState.Loading())
         viewModelScope.launch {
             val result = getAvailableBookUseCase()
-            if (result != null){
+            if (result != null) {
                 _bookState.postValue(RequestState.Success(result))
             } else {
                 _bookState.postValue(RequestState.Error("No se encontraron resultados"))
@@ -57,7 +54,7 @@ class CryptoViewModel @Inject constructor(
         _bidsState.postValue(RequestState.Loading())
         viewModelScope.launch {
             val result = getBidsUseCase(book)
-            if (result != null){
+            if (result != null) {
                 _bidsState.postValue(RequestState.Success(result))
             } else {
                 _bidsState.postValue(RequestState.Error("No se encontraron resultados"))
@@ -69,7 +66,7 @@ class CryptoViewModel @Inject constructor(
         _asksState.postValue(RequestState.Loading())
         viewModelScope.launch {
             val result = getAsksUseCase(book)
-            if (result != null){
+            if (result != null) {
                 _asksState.postValue(RequestState.Success(result))
             } else {
                 _asksState.postValue(RequestState.Error("No se encontraron resultados"))
@@ -81,12 +78,11 @@ class CryptoViewModel @Inject constructor(
         _tickerState.postValue(RequestState.Loading())
         viewModelScope.launch {
             val result = getTickerUseCase(book)
-            if (result != null){
+            if (result != null) {
                 _tickerState.postValue(RequestState.Success(result))
             } else {
                 _tickerState.postValue(RequestState.Error("No se encontraron resultados"))
             }
         }
     }
-
 }

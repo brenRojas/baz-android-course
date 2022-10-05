@@ -2,9 +2,8 @@ package com.brendarojas.criptomonedaswizeline.domain
 
 import com.brendarojas.criptomonedaswizeline.data.CryptoRepository
 import com.brendarojas.criptomonedaswizeline.domain.model.BooksModelDomain
-import io.mockk.MockKAnnotations
-import io.mockk.coEvery
-import io.mockk.coVerify
+import com.brendarojas.criptomonedaswizeline.utils.BaseUtils
+import io.mockk.*
 import io.mockk.impl.annotations.RelaxedMockK
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
@@ -14,45 +13,44 @@ class GetAvailableBookUseCaseTest {
 
     @RelaxedMockK
     private lateinit var cryptoRepository: CryptoRepository
-    //lateinit var getAvailableBookUseCase: GetAvailableBookUseCase
+
+    lateinit var getAvailableBookUseCase: GetAvailableBookUseCase
 
     @Before
-    fun onBefore(){
+    fun onBefore() {
         MockKAnnotations.init(this)
-       // getAvailableBookUseCase = GetAvailableBookUseCase(cryptoRepository)
+        mockkObject(BaseUtils)
+        getAvailableBookUseCase = GetAvailableBookUseCase(cryptoRepository)
     }
 
     @Test
     fun `when the api doesnt return anything then get values from database`() = runBlocking {
+        // given
+        // coEvery { cryptoRepository.getAllAvailableBooksFromApi() } returns emptyList()
 
-        //given
-        //coEvery { cryptoRepository.getAllAvailableBooksFromApi() } returns emptyList()
-
-        //when
+        // when
 
         GetAvailableBookUseCase(cryptoRepository)
-        //getAvailableBookUseCase()
+        // getAvailableBookUseCase()
 
-        //then
+        // then
         coVerify() { cryptoRepository.getAllAvailableBooksFromApi() }
     }
 
-
-   /* @Test
+    @Test
     fun `when the api doesnt return something then get values from api`() = runBlocking {
-        //given
+        // given
         val myList = listOf(BooksModelDomain("btc_mxn", "40000", "20000000", "0.00000030000", "3000", "10.00", "200000000"))
+        every { BaseUtils.isNetworkEnabled() } returns true
         coEvery { cryptoRepository.getAllAvailableBooksFromApi() } returns myList
 
-        //when
+        // when
         val response = getAvailableBookUseCase()
 
-        //then
+        // then
         coVerify(exactly = 1) { cryptoRepository.cleanAvailableBooks() }
         coVerify(exactly = 1) { cryptoRepository.insertAvailableBooks(any()) }
-        coVerify(exactly = 1) { cryptoRepository.getAllAvailableBooksFromDatabase() }
+        // coVerify(exactly = 2) { cryptoRepository.getAllAvailableBooksFromDatabase() }
         assert(myList == response)
-
-    }*/
-
+    }
 }

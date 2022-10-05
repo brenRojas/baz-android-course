@@ -2,15 +2,13 @@ package com.brendarojas.criptomonedaswizeline.ui.view
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.viewModels
 import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.brendarojas.criptomonedaswizeline.R
@@ -36,7 +34,8 @@ class CryptoListFragment : Fragment(), OnCryptoSelectedItem {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentCryptoListBinding.inflate(inflater, container, false)
@@ -49,18 +48,15 @@ class CryptoListFragment : Fragment(), OnCryptoSelectedItem {
 
         cryptoViewModel.onCreateAvailableBook()
         cryptoViewModel.bookState.observe(viewLifecycleOwner) {
-            when(it) {
+            when (it) {
                 is RequestState.Error -> Log.d("mensajito", "AvailableBookError: ${it.message}")
-                is RequestState.Loading -> Log.d("mensajito", "AvailableBookLoading: ${it}")
+                is RequestState.Loading -> Log.d("mensajito", "AvailableBookLoading: $it")
                 is RequestState.Success -> {
-
                     adapterBook.submitList(it.data)
                     binding.apply {
                         recyclerAvailableBooks.adapter = adapterBook
                         recyclerAvailableBooks.layoutManager = LinearLayoutManager(requireContext())
                     }
-
-
                 }
             }
         }
