@@ -31,9 +31,8 @@ class BidsAdapter() : ListAdapter<BidsModelDomain, BidsAdapter.ViewHolder>(difCa
 
     inner class ViewHolder(val binding: CryptoBidsItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun enlazarItem(bidsModel: BidsModelDomain) {
-            binding.txtBookBids.text = bidsModel.bookBids
-            binding.txtPriceBids.text = bidsModel.priceBids
-            binding.txtAmountBids.text = bidsModel.amountBids
+            binding.txtPriceBids.text = "Price = $ ${bidsModel.priceBids}.00"
+            binding.txtAmountBids.text = "  ->   Amount = ${bidsModel.amountBids}"
         }
     }
 }

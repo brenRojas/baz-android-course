@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.brendarojas.criptomonedaswizeline.databinding.CryptoAsksItemBinding
 import com.brendarojas.criptomonedaswizeline.databinding.CryptoBidsItemBinding
 import com.brendarojas.criptomonedaswizeline.domain.model.AsksModelDomain
 
@@ -21,7 +22,7 @@ class AsksAdapter() : ListAdapter<AsksModelDomain, AsksAdapter.ViewHolder>(difCa
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(viewGroup.context)
-        val binding = CryptoBidsItemBinding.inflate(inflater, viewGroup, false)
+        val binding = CryptoAsksItemBinding.inflate(inflater, viewGroup, false)
         return ViewHolder(binding)
     }
 
@@ -29,11 +30,10 @@ class AsksAdapter() : ListAdapter<AsksModelDomain, AsksAdapter.ViewHolder>(difCa
         viewHolder.enlazarItem(getItem(position))
     }
 
-    class ViewHolder(val binding: CryptoBidsItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder(val binding: CryptoAsksItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun enlazarItem(asksModel: AsksModelDomain) {
-            binding.txtBookBids.text = asksModel.bookAsks
-            binding.txtPriceBids.text = asksModel.priceAsks
-            binding.txtAmountBids.text = asksModel.amountAsks
+            binding.txtPriceAsks.text = "Price = $ ${asksModel.priceAsks}.00"
+            binding.txtAmountAsks.text = "  ->   Amount = ${asksModel.amountAsks}"
         }
     }
 }

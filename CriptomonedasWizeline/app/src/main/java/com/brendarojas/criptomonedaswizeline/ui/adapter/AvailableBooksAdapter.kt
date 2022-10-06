@@ -36,8 +36,9 @@ class AvailableBooksAdapter(
     inner class ViewHolder(val binding: CryptoItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun enlazarItem(bookModel: BooksModelDomain) {
             binding.txtBookName.text = bookModel.bookName.toBookName()
-            binding.txtMaximumPriceValue.text = bookModel.maximumPrice
-            binding.txtMinimumPriceValue.text = bookModel.minimumPrice
+            binding.txtMaximumPriceValue.text = "$ ${bookModel.maximumPrice}.00"
+            binding.txtMinimumPriceValue.text = "$ ${bookModel.minimumPrice}.00"
+            binding.txtMaximumAmount.text = "Cantidad: ${bookModel.maximumAmount}"
 
             binding.cardBook.setOnClickListener {
                 listener.onItemListener(bookModel)
