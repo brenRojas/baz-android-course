@@ -6,9 +6,10 @@ import androidx.room.PrimaryKey
 import com.brendarojas.criptomonedaswizeline.domain.model.AsksModelDomain
 
 @Entity(tableName = "table_asks")
-data class AsksEntity (
+data class AsksEntity(
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "idAsks") val idAsks: Int = 0,
+    @ColumnInfo(name = "idAsks")
+    val idAsks: Int = 0,
     @ColumnInfo(name = "book") var bookAsks: String,
     @ColumnInfo(name = "price") val priceAsks: String,
     @ColumnInfo(name = "amount") val amountAsks: String

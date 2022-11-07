@@ -11,12 +11,11 @@ import com.brendarojas.criptomonedaswizeline.data.database.entities.BidsEntity
 import com.brendarojas.criptomonedaswizeline.data.database.entities.BookEntity
 import com.brendarojas.criptomonedaswizeline.data.database.entities.TickerEntity
 
-//@Database( entities = [BookEntity::class, BidsEntity::class], version = 1)
-@Database( entities = [BookEntity::class, BidsEntity::class, AsksEntity::class, TickerEntity::class], version = 1)
+// @Database( entities = [BookEntity::class, BidsEntity::class], version = 1)
+@Database(entities = [BookEntity::class, BidsEntity::class, AsksEntity::class, TickerEntity::class], version = 1)
 abstract class CryptoDatabase : RoomDatabase() {
     abstract fun getBookDao(): BookDao
     abstract fun getBidsDao(): BidsDao
     abstract fun getAsksDao(): AsksDao
     abstract fun getTickerDao(): TickerDao
 }
-

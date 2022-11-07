@@ -4,11 +4,9 @@ import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
-class InitialApplication : Application(){
-
+class InitialApplication : Application() {
 
     companion object {
-
     }
 
     override fun onCreate() {

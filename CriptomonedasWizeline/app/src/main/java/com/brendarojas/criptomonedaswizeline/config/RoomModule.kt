@@ -1,13 +1,10 @@
 package com.brendarojas.criptomonedaswizeline.config
 
-import android.content.Context
 import androidx.room.Room
 import com.brendarojas.criptomonedaswizeline.data.database.CryptoDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ActivityComponent
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
@@ -23,7 +20,7 @@ object RoomModule {
     @Provides
     fun provideRoom(): CryptoDatabase {
         aplicationInstance.let {
-            if(databaseInstance == null){
+            if (databaseInstance == null) {
                 synchronized(CryptoDatabase::class.java) {
                     databaseInstance = Room.databaseBuilder(it, CryptoDatabase::class.java, CRYPTO_DATABASE_NAME)
                         .allowMainThreadQueries()
@@ -51,5 +48,4 @@ object RoomModule {
     @Singleton
     @Provides
     fun provideTickerDao() = provideRoom().getTickerDao()
-
 }

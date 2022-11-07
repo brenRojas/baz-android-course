@@ -1,13 +1,15 @@
 package com.brendarojas.criptomonedaswizeline.utils
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.net.ConnectivityManager
 
+@SuppressLint("StaticFieldLeak")
 object BaseUtils {
     var context: Context? = null
-    set(value) {
-        field = value
-    }
+        set(value) {
+            field = value
+        }
 
     fun isNetworkEnabled(): Boolean {
         var isWiFiConnect = false
@@ -28,7 +30,5 @@ object BaseUtils {
         }
 
         return isWiFiConnect || isMobileConnect
-
     }
-
 }

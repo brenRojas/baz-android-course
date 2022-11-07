@@ -11,5 +11,5 @@ data class TickerModel(
     var low: String,
     var ask: String,
     @SerializedName("bid") var nameBid: String,
-    @SerializedName("created_at") var createdAt: String,
+    @SerializedName("created_at") var createdAt: String
 )

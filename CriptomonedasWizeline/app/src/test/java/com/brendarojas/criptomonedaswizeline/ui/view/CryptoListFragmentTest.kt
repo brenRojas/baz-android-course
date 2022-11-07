@@ -1,18 +1,15 @@
 package com.brendarojas.criptomonedaswizeline.ui.view
 
-import androidx.fragment.app.testing.launchFragment
-import androidx.lifecycle.Lifecycle
 import com.brendarojas.criptomonedaswizeline.ui.adapter.AvailableBooksAdapter
 import com.brendarojas.criptomonedaswizeline.ui.viewModel.CryptoViewModel
 import io.mockk.*
 import org.junit.After
 import org.junit.Assert.*
-import org.junit.Test
 
-class CryptoListFragmentTest{
+class CryptoListFragmentTest {
 
     private val mockCryptoViewModel = mockk<CryptoViewModel>(relaxed = true)
-    private val mockCryptoAdapter = mockk< AvailableBooksAdapter>(relaxed = true)
+    private val mockCryptoAdapter = mockk<AvailableBooksAdapter>(relaxed = true)
 
     @After
     fun tearDown() {
@@ -38,8 +35,7 @@ class CryptoListFragmentTest{
         escenario.moveToState(Lifecycle.State.DESTROYED)
     }*/
 
-    private fun createFragmentInstance() : CryptoListFragment {
+    private fun createFragmentInstance(): CryptoListFragment {
         return CryptoListFragment()
     }
-
 }

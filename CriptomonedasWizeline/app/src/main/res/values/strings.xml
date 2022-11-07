@@ -5,7 +5,6 @@
     <string name="last_price">Last Price: $%1$s</string>
     <string name="highPrice">High Price: $%1$s</string>
     <string name="lowPrice">Low Price: $%1$s</string>
-    <string name="bookDetail">Book: $%1$s</string>
     <string name="priceDetail">Price: $%1$s</string>
     <string name="amountDetail">Amount: $%1$s</string>
 </resources>

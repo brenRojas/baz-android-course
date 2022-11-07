@@ -6,15 +6,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.brendarojas.criptomonedaswizeline.databinding.CryptoBidsItemBinding
-import com.brendarojas.criptomonedaswizeline.databinding.CryptoItemBinding
 import com.brendarojas.criptomonedaswizeline.domain.model.BidsModelDomain
-import com.brendarojas.criptomonedaswizeline.domain.model.BooksModelDomain
-import com.brendarojas.criptomonedaswizeline.utils.Utils.toBookName
 
-class BidsAdapter(
-): ListAdapter<BidsModelDomain, BidsAdapter.ViewHolder>(difCallback)  {
+class BidsAdapter() : ListAdapter<BidsModelDomain, BidsAdapter.ViewHolder>(difCallback) {
 
-    companion object{
+    companion object {
         var difCallback = object : DiffUtil.ItemCallback<BidsModelDomain>() {
             override fun areItemsTheSame(oldItem: BidsModelDomain, newItem: BidsModelDomain): Boolean =
                 oldItem.bookBids == newItem.bookBids
@@ -34,13 +30,9 @@ class BidsAdapter(
     }
 
     inner class ViewHolder(val binding: CryptoBidsItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun enlazarItem( bidsModel: BidsModelDomain){
-
-            binding.txtBookBids.text = bidsModel.bookBids
-            binding.txtPriceBids.text = bidsModel.priceBids
-            binding.txtAmountBids.text = bidsModel.amountBids
-
+        fun enlazarItem(bidsModel: BidsModelDomain) {
+            binding.txtPriceBids.text = "Price = $ ${bidsModel.priceBids}.00"
+            binding.txtAmountBids.text = "  ->   Amount = ${bidsModel.amountBids}"
         }
     }
-
 }
